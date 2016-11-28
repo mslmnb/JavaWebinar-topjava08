@@ -72,13 +72,14 @@
         <bean class="java.net.URI" id="dbUrl">
             <constructor-arg value="${DATABASE_URL}"/>
         </bean>
+        <!--http://stackoverflow.com/questions/10684244/dbcp-validationquery-for-different-databases        -->
         <bean id="dataSource"
               class="org.apache.tomcat.jdbc.pool.DataSource"
               p:url="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }"
               p:username="#{ @dbUrl.getUserInfo().split(':')[0] }"
               p:password="#{ @dbUrl.getUserInfo().split(':')[1] }"
               p:driverClassName="org.postgresql.Driver"
-              p:validationQuery="SELECT 1 FROM users"
+              p:validationQuery="SELECT 1"
               p:maxActive="10"
               p:minIdle="2"
               p:maxWait="20000"
